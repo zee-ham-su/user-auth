@@ -1,10 +1,10 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User, Organization } = require('../models');
-
+const { User, organisation } = require('../models');
 async function register(req, res) {
   try {
     const { firstName, lastName, email, password, phone } = req.body;
+    console.log(req.body);
 
     // Validate input
     if (!firstName || !lastName || !email || !password) {
@@ -30,17 +30,19 @@ async function register(req, res) {
       phone,
     });
 
-    // Create default organization
-    const organization = await Organization.create({
+    // Create default organisation
+    const organisation = await Organisation.create({
       name: `${firstName}'s Organisation`,
-      description: 'Default organization',
+      description: 'Default organisation',
     });
+    console.log(organisation);
 
-    // Associate user with organization
-    await user.addOrganization(organization);
+    // Associate user with organisation
+    await user.addorganisation(organisation);
 
     // Generate JWT token
     const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    console.log(token);
 
     res.status(201).json({
       status: 'success',
@@ -113,3 +115,4 @@ module.exports = {
   register,
   login,
 };
+
