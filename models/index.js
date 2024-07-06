@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 const UserModel = require('./user');
-const OrganizationModel = require('./organization');
+const OrganisationModel = require('./organisation');
 const dbConfig = require("../db.config.js");
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
@@ -16,15 +16,15 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 });
 
 const User = UserModel(sequelize);
-const Organization = OrganizationModel(sequelize);
+const Organisation = OrganisationModel(sequelize);
 
-User.belongsToMany(Organization, { through: 'UserOrganizations' });
-Organization.belongsToMany(User, { through: 'UserOrganizations' });
+User.belongsToMany(Organisation, { through: 'UserOrganisations' });
+Organisation.belongsToMany(User, { through: 'UserOrganisations' });
 
 module.exports = {
   sequelize,
   models: {
     User,
-    Organization,
+    Organisation,
   },
 };

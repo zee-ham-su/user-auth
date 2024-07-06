@@ -1,15 +1,15 @@
-const { Organization, User } = require('../models');
+const { Organisation, User } = require('../models');
 
-async function getOrganizations(req, res) {
+async function getOrganisations(req, res) {
   try {
     const user = await User.findByPk(req.user.userId);
-    const organizations = await user.getOrganizations();
+    const organisations = await user.getOrganisations();
 
     res.status(200).json({
       status: 'success',
-      message: 'Organizations retrieved successfully',
+      message: 'Organisations retrieved successfully',
       data: {
-        organizations: organizations.map(org => ({
+        organisations: organisations.map(org => ({
           orgId: org.orgId,
           name: org.name,
           description: org.description,
@@ -24,25 +24,25 @@ async function getOrganizations(req, res) {
   }
 }
 
-async function getOrganization(req, res) {
+async function getOrganisation(req, res) {
   try {
     const user = await User.findByPk(req.user.userId);
-    const organization = await Organization.findByPk(req.params.orgId);
+    const organisation = await Organisation.findByPk(req.params.orgId);
 
-    if (!organization || !(await user.hasOrganization(organization))) {
+    if (!organization || !(await user.hasOrganisation(organisation))) {
       return res.status(404).json({
         status: 'error',
-        message: 'Organization not found',
+        message: 'Organisation not found',
       });
     }
 
     res.status(200).json({
       status: 'success',
-      message: 'Organization retrieved successfully',
+      message: 'Organisation retrieved successfully',
       data: {
-        orgId: organization.orgId,
-        name: organization.name,
-        description: organization.description,
+        orgId: organisation.orgId,
+        name: organisation.name,
+        description: organisation.description,
       },
     });
   } catch (error) {
@@ -53,7 +53,7 @@ async function getOrganization(req, res) {
   }
 }
 
-async function createOrganization(req, res) {
+async function createOrganisation(req, res) {
   try {
     const { name, description } = req.body;
 
@@ -63,17 +63,17 @@ async function createOrganization(req, res) {
       });
     }
 
-    const organization = await Organization.create({ name, description });
+    const organisation = await Organisation.create({ name, description });
     const user = await User.findByPk(req.user.userId);
-    await user.addOrganization(organization);
+    await user.addOrganisation(organisation);
 
     res.status(201).json({
       status: 'success',
-      message: 'Organization created successfully',
+      message: 'Organisation created successfully',
       data: {
-        orgId: organization.orgId,
-        name: organization.name,
-        description: organization.description,
+        orgId: organisation.orgId,
+        name: organisation.name,
+        description: organisation.description,
       },
     });
   } catch (error) {
@@ -85,10 +85,10 @@ async function createOrganization(req, res) {
   }
 }
 
-async function addUserToOrganization(req, res) {
+async function addUserToOrganisation(req, res) {
   try {
     const { userId } = req.body;
-    const organization = await Organization.findByPk(req.params.orgId);
+    const organisation = await Organisation.findByPk(req.params.orgId);
     const user = await User.findByPk(userId);
 
     if (!organization || !user) {
@@ -98,7 +98,7 @@ async function addUserToOrganization(req, res) {
       });
     }
 
-    await organization.addUser(user);
+    await organisation.addUser(user);
 
     res.status(200).json({
       status: 'success',
@@ -114,8 +114,8 @@ async function addUserToOrganization(req, res) {
 }
 
 module.exports = {
-  getOrganizations,
-  getOrganization,
-  createOrganization,
-  addUserToOrganization,
+  getOrganisations,
+  getOrganisation,
+  createOrganisation,
+  addUserToOrganisation,
 };
