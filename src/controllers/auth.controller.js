@@ -42,7 +42,7 @@ exports.register = (req, res) => {
       db.organisations.create(organisation)
         .then(() => {
           const token = jwt.sign({ userId: user.userId }, JWT_SECRET, {
-            expiresIn: "24h" // Token expires in 24 hours
+            expiresIn: "24h"
           });
 
           res.status(201).json({
@@ -97,7 +97,7 @@ exports.login = (req, res) => {
       }
 
       const token = jwt.sign({ userId: user.userId }, JWT_SECRET, {
-        expiresIn: "24h" // Token expires in 24 hours
+        expiresIn: "24h"
       });
 
       res.status(200).json({

@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../../config/jwt.config");
 
+
 exports.verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
 

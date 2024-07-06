@@ -38,6 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 require("./src/routes/auth.routes")(app);
+require("./src/routes/user.routes")(app);
 
 // Set port, listen for requests
 const PORT = process.env.PORT || 3000;

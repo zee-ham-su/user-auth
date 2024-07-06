@@ -10,8 +10,6 @@ module.exports = app => {
   // User login
   router.post("/login", auth.login);
 
-  // get user profile by id
-  router.get('/users/:id', verifyToken, users.getUserById);
 
   app.use("/auth", router);
 };
